@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ayanna | Hangman Game</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Coustard:400,900" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="flexcontainer">
+        <h1>
+            Hangman
+        </h1>
+
+        <div class="masthead">
+            <img id="photoHeader" src="assets/images/IslandStyle_cropped.jpg" style="width:580px;height:165px;" />
+        </div>
+
+        <div id="instruction">
+            <p>Press any letter to get started guessing from a list of words related to 'Island Life'!</p>
+        </div>
+
+        <div id="right-guesses">
+            <p> Correct guesses:</p>
+        </div>
+
+        <div id="wrong-guesses">
+            <p> Incorrect guesses:</p>
+        </div>
+
+        <div id="guess-counter">
+            <p>Guesses remaining: </p>
+        </div>
+
+        <div id="tally">
+            <p>Wins: </p>
+            <p>Losses: </p>
+        </div>
+        <audio id="myAudio">
+            <source src="assets/images/tropical-musical-sound.mp3" type="audio/mp3">
+        </audio>
+    </div>
+    <script src="assets/javascript/game.js"></script>
+</body>
