@@ -10,7 +10,7 @@ var wordList = [
     'archipelago', 'coconut', 'tropical', 'hurricane', 'reggae', 'caribbean', 'fishing', 'relaxation', 'peninsula', 'islander', 'palms', 'oasis',
     'hammock', 'tranquility', 'steelpan', 'shoreline', 'sunglasses', 'carnival', 'vacation', 'tourist', 'rumpunch', 'sunshine', 'bachata',
     'paradise', 'cricket', 'seaside', 'rainforest', 'vegetation', 'snorkeling', 'yacht', 'snorkeling', 'cocktails', 'catamaran', 'sandcastle',
-    'surfboard', 'mangrove', 'nutmeg', 'chutney', 'calypso', 'curry', 'crab', 'flora', 'fauna'
+    'surfboard', 'mangrove', 'nutmeg', 'chutney', 'calypso', 'curry', 'crab', 'flora', 'fauna','ocean'
 ];
 
 // Randomly selected word from wordList
@@ -32,7 +32,7 @@ function newGame() {
     guessingArray = [];
 
     guessingWord = wordList[Math.floor(Math.random() * wordList.length)];
-    console.log(guessingWord);
+    //console.log(guessingWord);
 
     wrongGuesses = [];
 
@@ -40,8 +40,7 @@ function newGame() {
         guessingArray[i] = "_";
     }
 
-    //Testing
-    console.log(guessingArray.join(" "));
+    //console.log(guessingArray.join(" "));
 
     document.getElementById("right-guesses").innerHTML = guessingArray.join(" ");
 
