@@ -1,5 +1,7 @@
+//Declaring and initialising values of Globally accessible variables----------------------------------------------------------------------------
+
 // Counts to keep track of # of guesses, wins and losses
-var numOfGuessesLeft = 10;
+var numOfGuessesLeft = 8;
 var wins = 0;
 var losses = 0;
 
@@ -12,7 +14,7 @@ var wordList = [
 ];
 
 // Randomly selected word from wordList
-var guessingWord = " ";
+var guessingWord = "";
 
 //The guessing array of empty letter holders to accept player's guesses
 var guessingArray = [];
@@ -22,12 +24,17 @@ var wrongGuesses = [];
 
 
 
-// Function to start a new game
+// Function to start a new game -----------------------------------------------------------------------------------------------------------------
+
 function newGame() {
-    numOfGuessesLeft = 10;
+    numOfGuessesLeft = 8;
+
+    guessingArray = [];
 
     guessingWord = wordList[Math.floor(Math.random() * wordList.length)];
     console.log(guessingWord);
+
+    wrongGuesses = [];
 
     for (i = 0; i < guessingWord.length; i++) {
         guessingArray[i] = "_";
@@ -47,84 +54,93 @@ function newGame() {
 
 }
 
+//newGame();
+// Function to determine how to handle the key the user pressed---------------------------------------------------------------------------------
+
+function evaluateGuess(anyLetter) {
+
+    var guessLetterInWord = false;
+    
+    if (anyLetter.length > 1) {
+        alert("Please enter a single letter");
+    } else if (anyLetter.length === 1) {
+        for (j = 0; j < guessingArray.length; j++) {
+            if (guessingWord[j] === anyLetter) {
+                guessingArray[j] = anyLetter;
+                guessLetterInWord = true;
+            } 
+        }
+        //console.log("Guess Letter in Word: " +  guessLetterInWord);
+        document.getElementById("right-guesses").innerHTML = guessingArray.join(" ");
+    }
+        //console.log("index of guess in wrongGuesses: " + wrongGuesses.indexOf(anyLetter));
+        //console.log("index of guess in guessingWord: " + guessingWord.indexOf(anyLetter));
+        //console.log("guessLetterInWord = " + guessLetterInWord);
+
+    if ((guessLetterInWord === false) && (wrongGuesses.indexOf(anyLetter) === -1)) {
+        console.log(wrongGuesses.indexOf(anyLetter));
+        console.log("Ayanna");
+
+        wrongGuesses.push(anyLetter.toUpperCase());
+        console.log(wrongGuesses);
+        numOfGuessesLeft--;
+        document.getElementById("wrong-guesses").innerHTML = "Incorrect Guesses: <br>" + wrongGuesses.join(" ");
+        document.getElementById("guess-counter").innerHTML = "<p> Guesses remaining: <br>" + numOfGuessesLeft + "</p>";
+    }
+};
+
+
+
+// Function to determine if player wins or loses-----------------------------------------------------------------------------------------------------
+
+function tallyScores() {
+
+    var x = document.getElementById("myAudio");
+
+    console.log(guessingWord);
+    console.log(guessingArray.join(""));
+    console.log(guessingWord.split(""));
+    console.log(guessingArray);
+
+    //if (guessingWord === guessingArray.toString()) { -- alternative win condition
+    if ((guessingWord.split("")) == guessingArray) {
+        console.log("true");
+        wins++;
+        x.play();
+        alert("You win!");
+        document.getElementById("tally").innerHTML = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
+    } else if (numOfGuessesLeft === 0) {
+        losses++;
+        document.getElementById("tally").innerHTML = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
+    }
+
+};
+
+//------WHERE/ HOW THE MAGIC HAPPENS--------------------------------------------------------------------------------------------------------------------
+// Game process is triggered by user key release--------------------------------------------------------------------------------------------------------
 newGame();
-
-
-function evaluateGuess() {
-    //Check if guess is a letter
-
-    document.onkeyup = function (event) {
+document.onkeyup = function (event) {
+    
         var guessCode = event.keycode;
         var guessLetter = event.key.toLowerCase();
-        var guessLetterInWord;
-
-        if (guessLetter.length !== 1) {
-            alert("Please enter a single letter");
-        } else if ((guessCode <= 64) || (guessCode >= 91)) {
+        //newGame();
+    
+        if ((guessCode <= 64) || (guessCode >= 91)) {
             alert("Please enter letters only");
         } else {
-            for (j = 0; j < guessingArray.length; j++) {
-                if (guessingWord[j] === guessLetter) {
-                    guessLetterInWord = true;
-                    guessingArray[j] = guessLetter; //can these two steps happen within this if statement? How to test?
-                } else {
-                    wrongGuesses.push(guessLetter.toUpperCase());
-                    numOfGuessesLeft--;
-                }
-            }
+            //  newGame();
+            evaluateGuess(guessLetter);
+    
         }
+    
+        tallyScores();
+        //newGame();
+    };
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    }
-}
-
-evaluateGuess();
-
-
-
-
-
-// document.onkeyup = function(event) {
-//    var guess = event.key.toLowerCase();
-
-
-// //Game Code
-
-// //Choose a word for the user to guess
-// var guessingWord = wordList[Math.floor(Math.random() * wordList.length)];
-
-
-// while (numOfGuessesLeft > 0) {
-//     
-//     var test = document.getElementById("demo")
-//     test.innerHTML = guessingArray.join(" ");
-
-//     if (guess.length !== 1) {
-//         var msg = document.getElementById("insruction")
-//         msg.innerHTML = "Please enter a single letter";
-//     }
-
-//     else { 
-//         for (var j = 0; j < guessingWord.length; j++) {
-//             if (guessingWord[j] === guess) {
-//                 guessingArray[j] = guess;
-//                 numOfGuessesLeft--;
-//             }
-//         }
-//     }
-
-//Still to do
-
-// if (guessingWord === guessingArray.toString()) {
-//     // ..add to the win counter & give the user an alert.
-//     wins++;
-//     alert("You win!");
-//   var x =  document.getElementById("myAudio")
-        //function playAudio() {
-//          x.play();
-        //}
-
-// Update "tally" div within html
-//      document.getElementById("tally").innerHTML = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
-
-//determine how to start a new round of play without zeroing out tally of wins and losses.
+//still to do:
+// 1.) Determine how to start a new round of play without zeroing out tally of wins and losses.
+//      I.e. where to appropriately call the function newGame() to have the game restart after a round of play
+// 2.) Assess whether event.keycode is within the range for letters within the evaluateGuess() function instead of within the event function
+// 3.) Determine why the wrong guesses is duplicating a letter if pressed repeatedly
 
