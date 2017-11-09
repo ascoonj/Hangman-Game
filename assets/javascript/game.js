@@ -66,9 +66,7 @@ function evaluateGuess(anyLetter, letterCode) {
         alert("Please press letter keys only");
     } else if (anyLetter.length > 1) {
         alert("Please enter a single letter");
-    } 
-    
-    if (anyLetter.length === 1) {
+    } else  if (anyLetter.length === 1) {
         for (j = 0; j < guessingArray.length; j++) {
             if (guessingWord[j] === anyLetter) {
                 guessingArray[j] = anyLetter;
@@ -100,6 +98,7 @@ function evaluateGuess(anyLetter, letterCode) {
 function tallyScores() {
 
     var x = document.getElementById("myAudio");
+    
 
     console.log(guessingWord);
     console.log(guessingArray.join(""));
@@ -107,17 +106,17 @@ function tallyScores() {
     console.log(guessingArray);
 
     //if (guessingWord === guessingArray.toString()) { -- alternative win condition
-    if (guessingWord.split("") === guessingArray) {
+    if (guessingWord === guessingArray.join("")) {
         console.log("true");
         wins++;
         x.play();
-        alert("You win!");
         document.getElementById("tally").innerHTML = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
+        alert("You win! The word was " + guessingWord + "!");
         newGame();
 
     } else if (numOfGuessesLeft === 0) {
         losses++;
-        alert("You lose :-(")
+        alert("You lose :-(. The word was " + guessingWord + "!");
         document.getElementById("tally").innerHTML = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
         newGame();
     }
@@ -140,8 +139,7 @@ document.onkeyup = function (event) {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //still to do:
-// 1.) Determine how to start a new round of play without zeroing out tally of wins and losses.
-//      I.e. where to appropriately call the function newGame() to have the game restart after a round of play
+
 // 2.) Assess whether event.keycode is within the range for letters within the evaluateGuess() function instead of within the event function
 // 3.) Prevent the non-letter keys from being logged in the wrong guesses array.
 // 4.) Determine why the wrong guesses is duplicating a letter if pressed repeatedly
