@@ -57,30 +57,34 @@ function newGame() {
 //newGame();
 // Function to determine how to handle the key the user pressed---------------------------------------------------------------------------------
 
-function evaluateGuess(anyLetter) {
+function evaluateGuess(anyLetter, letterCode) {
 
     var guessLetterInWord = false;
-    
-    if (anyLetter.length > 1) {
+
+    if ((letterCode <= 64) || (letterCode >= 91)) {
+        var keyIsALetter = true;
+        alert("Please press letter keys only");
+    } else if (anyLetter.length > 1) {
         alert("Please enter a single letter");
-    } else if (anyLetter.length === 1) {
+    } 
+    
+    if (anyLetter.length === 1) {
         for (j = 0; j < guessingArray.length; j++) {
             if (guessingWord[j] === anyLetter) {
                 guessingArray[j] = anyLetter;
                 guessLetterInWord = true;
-            } 
+            }
         }
         //console.log("Guess Letter in Word: " +  guessLetterInWord);
         document.getElementById("right-guesses").innerHTML = guessingArray.join(" ");
     }
-        //console.log("index of guess in wrongGuesses: " + wrongGuesses.indexOf(anyLetter));
-        //console.log("index of guess in guessingWord: " + guessingWord.indexOf(anyLetter));
-        //console.log("guessLetterInWord = " + guessLetterInWord);
+    //console.log("index of guess in wrongGuesses: " + wrongGuesses.indexOf(anyLetter));
+    //console.log("index of guess in guessingWord: " + guessingWord.indexOf(anyLetter));
+    //console.log("guessLetterInWord = " + guessLetterInWord);
 
     if ((guessLetterInWord === false) && (wrongGuesses.indexOf(anyLetter) === -1)) {
         console.log(wrongGuesses.indexOf(anyLetter));
         console.log("Ayanna");
-
         wrongGuesses.push(anyLetter.toUpperCase());
         console.log(wrongGuesses);
         numOfGuessesLeft--;
@@ -103,15 +107,19 @@ function tallyScores() {
     console.log(guessingArray);
 
     //if (guessingWord === guessingArray.toString()) { -- alternative win condition
-    if ((guessingWord.split("")) == guessingArray) {
+    if (guessingWord.split("") === guessingArray) {
         console.log("true");
         wins++;
         x.play();
         alert("You win!");
         document.getElementById("tally").innerHTML = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
+        newGame();
+
     } else if (numOfGuessesLeft === 0) {
         losses++;
+        alert("You lose :-(")
         document.getElementById("tally").innerHTML = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
+        newGame();
     }
 
 };
@@ -120,27 +128,20 @@ function tallyScores() {
 // Game process is triggered by user key release--------------------------------------------------------------------------------------------------------
 newGame();
 document.onkeyup = function (event) {
+
+    var guessCode = event.keycode;
+    var guessLetter = event.key.toLowerCase();
+  
+    evaluateGuess(guessLetter, guessCode);
+
+    tallyScores();
     
-        var guessCode = event.keycode;
-        var guessLetter = event.key.toLowerCase();
-        //newGame();
-    
-        if ((guessCode <= 64) || (guessCode >= 91)) {
-            alert("Please enter letters only");
-        } else {
-            //  newGame();
-            evaluateGuess(guessLetter);
-    
-        }
-    
-        tallyScores();
-        //newGame();
-    };
+};
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //still to do:
 // 1.) Determine how to start a new round of play without zeroing out tally of wins and losses.
 //      I.e. where to appropriately call the function newGame() to have the game restart after a round of play
 // 2.) Assess whether event.keycode is within the range for letters within the evaluateGuess() function instead of within the event function
-// 3.) Determine why the wrong guesses is duplicating a letter if pressed repeatedly
-
+// 3.) Prevent the non-letter keys from being logged in the wrong guesses array.
+// 4.) Determine why the wrong guesses is duplicating a letter if pressed repeatedly
