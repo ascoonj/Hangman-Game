@@ -18,21 +18,21 @@ body {
    font-family: 'Coustard', serif;
    font-weight: 900;
    font-size: 64px;
-   padding: 10px 0 10px 0;
+   padding: 0 0 10px 0;
    color: rgb(51, 51, 104);
    margin-top: 10px;
  }
 
 
  .masthead {
-   margin-bottom: 15px;
+   margin-bottom: 8px;
  }
  
 
- #instruction, #right-guesses, #wrong-guesses, #guess-counter, #tally {
+ #instruction, #right-guesses, #wrong-guesses, #guess-counter, #tally, #instruction, #win-or-lose {
     width: 400px;
-    /* height: 70px; */
-    margin-bottom: 15px;
+    height: 50px;
+    margin-bottom: 8px;
     padding: 10px;
     background-color: lavender;
     color: darkslategray;
@@ -42,13 +42,10 @@ body {
     font-weight: bold;
   }
 
-  #right-guesses, #wrong-guesses, #guess-counter, #tally {
-     height: 58px;
-  }
-
-  #instruction {
-    height: 50px;
-  }
+   #win-or-lose {
+    color: rgb(14, 61, 127);
+    font-size: 17px;
+  } 
 
 
 /* 
